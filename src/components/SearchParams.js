@@ -33,28 +33,37 @@ const SearchParams = () => {
   };
 
   return (
-    <div className="search-params">
-      <form onSubmit={onFormSubmit}>
+    <div className="my-0 mx-auto w-11/12">
+      <form
+        className="mb-10 p-10 rounded-lg bg-gray-200 shadow-lg flex flex-col justify-center items-center gap-5"
+        onSubmit={onFormSubmit}
+      >
         {adoptedPet ? (
           <div className="pet">
             <img src={adoptedPet.images[0]} alt={adoptedPet.name} />
           </div>
         ) : null}
 
-        <label htmlFor="location">
-          Location
+        <div>
+          <label htmlFor="location" className="block font-bold mb-2">
+            Location
+          </label>
           <input
             id="location"
+            className="w-60 block focus:outline-none focus:shadow-outline rounded leading-tight"
             type="text"
             name="location"
             placeholder="Location"
           />
-        </label>
+        </div>
 
-        <label htmlFor="animal">
-          Animal
+        <div>
+          <label htmlFor="animal" className="block font-bold mb-2">
+            Animal
+          </label>
           <select
             id="animal"
+            className="w-60 block focus:outline-none focus:shadow-outline rounded leading-tight"
             name="animal"
             onChange={(e) => {
               setAnimal(e.target.value);
@@ -70,11 +79,18 @@ const SearchParams = () => {
               </option>
             ))}
           </select>
-        </label>
+        </div>
 
-        <label htmlFor="breed">
-          Breed
-          <select id="breed" name="breed" disabled={!breeds.length}>
+        <div>
+          <label htmlFor="breed" className="block font-bold mb-2">
+            Breed
+          </label>
+          <select
+            className="w-60 block disabled:opacity-50 focus:outline-none focus:shadow-outline rounded leading-tight"
+            id="breed"
+            name="breed"
+            disabled={!breeds.length}
+          >
             <option />
             {breeds.map((breed) => (
               <option key={breed} value={breed}>
@@ -82,9 +98,14 @@ const SearchParams = () => {
               </option>
             ))}
           </select>
-        </label>
+        </div>
 
-        <button type="submit">Submit</button>
+        <button
+          className="py-1 px-5 rounded-md bg-violet-500 text-white shadow-lg shadow-violet-400/50 hover:opacity-80 active:shadow-none"
+          type="submit"
+        >
+          Submit
+        </button>
       </form>
       <Results pets={pets} />
     </div>
