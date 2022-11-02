@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdoptedPetContext from './components/AdoptedPetContext';
 import Header from './components/Header';
+import LoadingSpinner from './components/LoadingSpinner';
 // import WrappedDetails from './components/Details';
 // import SearchParams from './components/SearchParams';
 
@@ -24,12 +25,8 @@ const App = () => {
   const adoptedPet = useState(null);
 
   return (
-    <div className="m-0 p-0">
-      <Suspense
-        fallback={
-          <h2 className="flex justify-center items-center mt-10">Loading...</h2>
-        }
-      >
+    <div className="m-0 p-0 relative">
+      <Suspense fallback={<LoadingSpinner />}>
         <BrowserRouter>
           <AdoptedPetContext.Provider value={adoptedPet}>
             <QueryClientProvider client={queryClient}>
