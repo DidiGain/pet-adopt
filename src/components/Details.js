@@ -1,60 +1,48 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
-import { useContext } from 'react';
+import { lazy, useState, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import AdoptedPetContext from './AdoptedPetContext';
 import ErrorBoundary from './ErrorBoundary';
-import Modal from './Modal';
+// import Modal from './Modal';
 import fetchPet from '../hooks/fetchPet';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import useToggleMode from '../hooks/useToggle';
+import LoadingSpinner from './LoadingSpinner';
+
+const Modal = lazy(() => import('./Modal'));
 
 const Details = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [showModal, setShowModal] = useState(false);
-
+  const { show, handleToggle } = useToggleMode();
   const results = useQuery(['details', id], fetchPet);
-  const [_, setAdoptedPet] = useContext(AdoptedPetContext);
 
   if (results.isLoading) {
-    return (
-      <div className="loading-box">
-        <h2 className="loader">
-          <AiOutlineLoading3Quarters />
-        </h2>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   const pet = results.data.pets[0];
 
   return (
-    <div className="details">
-      <img />
-      <div>
-        <h1>{pet.name}</h1>
-        <h2>{`${pet.animal} — ${pet.breed} — ${pet.city}, ${pet.state}`}</h2>
-        <button onClick={() => setShowModal(true)}>Adopt {pet.name}</button>
-        <p>{pet.description}</p>
-        {showModal ? (
-          <Modal>
-            <div>
-              <h1>Wanna adopt {pet.name}?</h1>
-              <div className="buttons">
-                <button
-                  onClick={() => {
-                    setAdoptedPet(pet);
-                    navigate('/');
-                  }}
-                >
-                  Yes
-                </button>
-                <button onClick={() => setShowModal(false)}>No</button>
-              </div>
-            </div>
-          </Modal>
-        ) : null}
+    <div className="p-10">
+      <img
+        src={pet.images[0]}
+        className="m-auto w-40 h-40 mb-10 rounded-full"
+      />
+      <div classNmame="flex flex-col justify-center items-center ">
+        <h1 className="text-2xl text-pink-500 mb-5 text-center">{pet.name}</h1>
+        <h2 className="font-bold mb-10 text-center">{`${pet.animal}: ${pet.breed} from ${pet.city}, ${pet.state}`}</h2>
+        <div className="flex justify-center">
+          <button
+            className="m-auto mb-10 px-5 py-2 rounded-md bg-violet-500 text-white shadow-lg shadow-violet-400/50 hover:opacity-80 active:shadow-none"
+            onClick={() => handleToggle(show)}
+          >
+            Adopt {pet.name}
+          </button>
+        </div>
+
+        <p className="text-xl first-letter:ml-10">{pet.description}</p>
       </div>
+      <Modal isOpen={show} hide={handleToggle} pet={pet} />
     </div>
   );
 };
