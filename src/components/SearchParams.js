@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { useContext, useState } from 'react';
+import { useContext, useDeferredValue, useState, useMemo } from 'react';
 import AdoptedPetContext from './AdoptedPetContext';
 import Results from './Results';
 import fetchSearch from '../hooks/fetchSearch';
 import useBreedList from '../hooks/useBreedList';
 import fetchBreedList from '../hooks/fetchBreedList';
+import AdoptedPet from './AdoptedPet';
 
 const ANIMALS = ['bird', 'cat', 'dog', 'rabbit', 'reptile'];
 
@@ -20,6 +21,11 @@ const SearchParams = () => {
 
   const results = useQuery(['search', requestParams], fetchSearch);
   const pets = results?.data?.pets ?? [];
+  const deferredPets = useDeferredValue(pets);
+  const renderedPets = useMemo(
+    () => <Results pets={deferredPets} />,
+    [deferredPets]
+  );
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -38,11 +44,7 @@ const SearchParams = () => {
         className="mb-10 p-10 rounded-lg bg-gray-200 shadow-lg flex flex-col justify-center items-center gap-5"
         onSubmit={onFormSubmit}
       >
-        {adoptedPet ? (
-          <div className="pet">
-            <img src={adoptedPet.images[0]} alt={adoptedPet.name} />
-          </div>
-        ) : null}
+        {adoptedPet ? <AdoptedPet adoptedPet={adoptedPet} /> : null}
 
         <div>
           <label htmlFor="location" className="block font-bold mb-2">
@@ -107,7 +109,7 @@ const SearchParams = () => {
           Submit
         </button>
       </form>
-      <Results pets={pets} />
+      {renderedPets}
     </div>
   );
 };
