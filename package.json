@@ -4,7 +4,10 @@
   "description": "Adopt a pet",
   "main": "src/App.js",
   "scripts": {
-    "dev": "parcel src/index.html"
+    "dev": "parcel src/index.html",
+    "build:parcel": "parcel build ./src/index.html",
+    "build": "npm run clean && npm run build:parcel",
+    "clean": "rm -rf dist/*"
   },
   "keywords": [],
   "author": "Dinara Gain",
