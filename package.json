@@ -2,7 +2,6 @@
   "name": "pet-adopt",
   "version": "1.0.0",
   "description": "Adopt a pet",
-  "main": "src/App.js",
   "scripts": {
     "dev": "parcel src/index.html",
     "build:parcel": "parcel build ./src/index.html",
