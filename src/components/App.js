@@ -3,9 +3,9 @@ import { lazy, useState, StrictMode, Suspense } from 'react';
 import { render } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AdoptedPetContext from './components/AdoptedPetContext';
-import Header from './components/Header';
-import LoadingSpinner from './components/LoadingSpinner';
+import AdoptedPetContext from './AdoptedPetContext';
+import Header from './Header';
+import LoadingSpinner from './LoadingSpinner';
 // import WrappedDetails from './components/Details';
 // import SearchParams from './components/SearchParams';
 
@@ -18,8 +18,8 @@ const queryClient = new QueryClient({
   },
 });
 
-const Details = lazy(() => import('./components/Details'));
-const SearchParams = lazy(() => import('./components/SearchParams'));
+const Details = lazy(() => import('./Details'));
+const SearchParams = lazy(() => import('./SearchParams'));
 
 const App = () => {
   const adoptedPet = useState(null);
