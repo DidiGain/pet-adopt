@@ -6,17 +6,26 @@ import fetchSearch from '../hooks/fetchSearch';
 import useBreedList from '../hooks/useBreedList';
 import fetchBreedList from '../hooks/fetchBreedList';
 import AdoptedPet from './AdoptedPet';
+import { useDispatch, useSelector } from 'react-redux';
+import changeAnimal from '../redux/actionCreators/changeAnimal';
+import changeBreed from '../redux/actionCreators/changeBreed';
+import changeLocation from '../redux/actionCreators/changeLocation';
 
 const ANIMALS = ['bird', 'cat', 'dog', 'rabbit', 'reptile'];
 
 const SearchParams = () => {
+  const animal = useSelector((state) => state.animal);
+  const breed = useSelector((state) => state.breed);
+  const location = useSelector((state) => state.location);
+
+  const dispatch = useDispatch();
+
   const [adoptedPet] = useContext(AdoptedPetContext);
-  const [animal, setAnimal] = useState('');
   const [breeds] = useBreedList(animal);
   const [requestParams, setRequestParams] = useState({
-    animal: '',
-    breed: '',
-    location: '',
+    animal,
+    breed,
+    location,
   });
 
   const results = useQuery(['search', requestParams], fetchSearch);
@@ -56,6 +65,8 @@ const SearchParams = () => {
             type="text"
             name="location"
             placeholder="Location"
+            onChange={(e) => dispatch(changeLocation(e.target.value))}
+            value={location}
           />
         </div>
 
@@ -68,11 +79,12 @@ const SearchParams = () => {
             className="w-60 block focus:outline-none focus:shadow-outline rounded leading-tight"
             name="animal"
             onChange={(e) => {
-              setAnimal(e.target.value);
+              dispatch(changeAnimal(e.target.value));
             }}
             onBlur={(e) => {
-              setAnimal(e.target.value);
+              dispatch(changeAnimal(e.target.value));
             }}
+            value={animal}
           >
             <option />
             {ANIMALS.map((animal) => (
@@ -92,6 +104,9 @@ const SearchParams = () => {
             id="breed"
             name="breed"
             disabled={!breeds.length}
+            value={breed}
+            onChange={(e) => dispatch(changeBreed(e.target.value))}
+            onBlur={(e) => dispatch(changeBreed(e.target.value))}
           >
             <option />
             {breeds.map((breed) => (
