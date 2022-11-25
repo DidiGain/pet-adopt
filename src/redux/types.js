@@ -1,0 +1,3 @@
+export const CHANGE_ANIMAL = 'CHANGE_ANIMAL';
+export const CHANGE_BREED = 'CHANGE_BREED';
+export const CHANGE_LOCATION = 'CHANGE_LOCATION';
