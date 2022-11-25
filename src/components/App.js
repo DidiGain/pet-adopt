@@ -2,12 +2,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { lazy, useState, StrictMode, Suspense } from 'react';
 import { render } from 'react-dom';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdoptedPetContext from './AdoptedPetContext';
 import Header from './Header';
 import LoadingSpinner from './LoadingSpinner';
-// import WrappedDetails from './components/Details';
-// import SearchParams from './components/SearchParams';
+import store from '../redux/store/store';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,19 +26,21 @@ const App = () => {
 
   return (
     <div className="m-0 p-0 relative">
-      <Suspense fallback={<LoadingSpinner />}>
-        <BrowserRouter>
-          <AdoptedPetContext.Provider value={adoptedPet}>
-            <QueryClientProvider client={queryClient}>
-              <Header />
-              <Routes>
-                <Route path="/details/:id" element={<Details />} />
-                <Route path="/" element={<SearchParams />} />
-              </Routes>
-            </QueryClientProvider>
-          </AdoptedPetContext.Provider>
-        </BrowserRouter>
-      </Suspense>
+      <Provider store={store}>
+        <Suspense fallback={<LoadingSpinner />}>
+          <BrowserRouter>
+            <AdoptedPetContext.Provider value={adoptedPet}>
+              <QueryClientProvider client={queryClient}>
+                <Header />
+                <Routes>
+                  <Route path="/details/:id" element={<Details />} />
+                  <Route path="/" element={<SearchParams />} />
+                </Routes>
+              </QueryClientProvider>
+            </AdoptedPetContext.Provider>
+          </BrowserRouter>
+        </Suspense>
+      </Provider>
     </div>
   );
 };
