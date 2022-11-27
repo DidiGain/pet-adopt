@@ -3,7 +3,6 @@ import { lazy, useState, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import AdoptedPetContext from './AdoptedPetContext';
 import ErrorBoundary from './ErrorBoundary';
-// import Modal from './Modal';
 import fetchPet from '../hooks/fetchPet';
 import useToggleMode from '../hooks/useToggle';
 import LoadingSpinner from './LoadingSpinner';
@@ -14,6 +13,7 @@ const Details = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { show, handleToggle } = useToggleMode();
+  const adoptedPet = useContext(AdoptedPetContext);
   const results = useQuery(['details', id], fetchPet);
 
   if (results.isLoading) {
@@ -33,10 +33,13 @@ const Details = () => {
         <h2 className="font-bold mb-10 text-center">{`${pet.animal}: ${pet.breed} from ${pet.city}, ${pet.state}`}</h2>
         <div className="flex justify-center">
           <button
-            className="m-auto mb-10 px-5 py-2 rounded-md bg-violet-500 text-white shadow-lg shadow-violet-400/50 hover:opacity-80 active:shadow-none"
+            className="m-auto mb-10 px-5 py-2 rounded-md bg-violet-500 text-white shadow-lg shadow-violet-400/50 hover:opacity-80 active:shadow-none disabled:bg-slate-500 disabled:shadow-none hover:disabled:opacity-100 hover:disabled:cursor-not-allowed"
             onClick={() => handleToggle(show)}
+            disabled={adoptedPet[0]?.name === pet?.name}
           >
-            Adopt {pet.name}
+            {adoptedPet[0] !== null && adoptedPet[0]?.name === pet?.name
+              ? `${pet.name} already adopted`
+              : `Adopt ${pet.name}`}
           </button>
         </div>
 
