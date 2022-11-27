@@ -28,7 +28,7 @@ const Details = () => {
         src={pet.images[0]}
         className="m-auto w-40 h-40 mb-10 rounded-full"
       />
-      <div classNmame="flex flex-col justify-center items-center ">
+      <div className="flex flex-col justify-center items-center ">
         <h1 className="text-2xl text-pink-500 mb-5 text-center">{pet.name}</h1>
         <h2 className="font-bold mb-10 text-center">{`${pet.animal}: ${pet.breed} from ${pet.city}, ${pet.state}`}</h2>
         <div className="flex justify-center">
