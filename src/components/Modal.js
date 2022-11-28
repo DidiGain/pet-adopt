@@ -11,16 +11,14 @@ const Modal = ({ isOpen, hide, pet }) => {
 
   const modal = (
     <div
-      className="fixed top-0 right-0 left-0 bottom-0 z-50 w-screen h-screen bg-black/70 overflow-hidden"
+      className="fixed top-0 right-0 left-0 bottom-0 z-50 w-screen h-screen text-base md:text-xl lg:text-2xl bg-black/70 overflow-hidden"
       onClick={hide}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3 w-1/3 p-10 bg-white rounded shadow-lg z-100 text-center"
+        className="fixed top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3 w-1/2 lg:w-1/3 p-10 bg-white rounded shadow-lg z-100 text-center"
       >
-        <h1 className="mb-10 text-2xl text-pink-700">
-          Wanna adopt {pet.name}?
-        </h1>
+        <h1 className="mb-10 text-pink-700">Wanna adopt {pet.name}?</h1>
         <div className="flex justify-center items-center gap-2">
           <button
             className="py-1 px-7 bg-pink-500 text-white shadow-lg rounded hover:opacity-80 active:shadow-none"
