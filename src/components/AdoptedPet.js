@@ -17,11 +17,10 @@ const AdoptedPet = ({ adoptedPet }) => {
 
   return (
     <>
-      {' '}
       <div
         onMouseEnter={toggleHover}
         onMouseLeave={toggleHover}
-        className="relative w-1/4 flex flex-col items-center gap-1"
+        className="relative w-1/2 lg:1/3 flex flex-col items-center gap-1"
       >
         {isHovered && (
           <button
@@ -34,7 +33,7 @@ const AdoptedPet = ({ adoptedPet }) => {
         <img
           src={adoptedPet.images[0]}
           alt={adoptedPet.name}
-          className="object-contain rounded-full"
+          className="w-full object-contain rounded-full"
         />
       </div>
       <Link to={`/details/${adoptedPet?.id}`}>
