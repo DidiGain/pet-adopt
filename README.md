@@ -1,6 +1,13 @@
 # Adopt a pet
 
-### Techs: React / React Query / Tailwindcss
-Deploy: https://adopt-pet-friend.netlify.app/
+### Techs used: 
+- React Query
+- Redux 
+- Tailwindcss
 
-<img width="878" alt="adopt pet site" src="https://user-images.githubusercontent.com/36891737/199525155-2e75ad1a-1ac2-4e05-8931-9791c053943b.png">
+<img width="300" alt="adopt" src="https://user-images.githubusercontent.com/36891737/210824764-b4d4ed4e-86c1-464f-9bb8-841b20dd81bc.png">
+
+## Demo version:
+[Pet adoption](https://adopt-pet-friend.netlify.app/)
+
+
